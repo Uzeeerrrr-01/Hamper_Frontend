@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Instagram, Twitter, Linkedin, Mail, Loader2, CheckCircle2 } from 'lucide-react';
+import { Mail, Loader2, CheckCircle2 } from 'lucide-react';
+import { FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';
 import { Button } from '../ui/button';
 import { newsletterService } from '@/services/contactService';
 
@@ -103,13 +104,13 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} The Hamper House. All rights reserved.</p>
           <div className="flex space-x-6 mt-6 md:mt-0">
             <a href="#" className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded" aria-label="Follow us on Instagram">
-              <Instagram className="w-5 h-5" aria-hidden="true" />
+              <FaInstagram className="w-5 h-5" aria-hidden="true" />
             </a>
             <a href="#" className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded" aria-label="Follow us on LinkedIn">
-              <Linkedin className="w-5 h-5" aria-hidden="true" />
+              <FaLinkedin className="w-5 h-5" aria-hidden="true" />
             </a>
             <a href="#" className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded" aria-label="Follow us on Twitter">
-              <Twitter className="w-5 h-5" aria-hidden="true" />
+              <FaTwitter className="w-5 h-5" aria-hidden="true" />
             </a>
             <a href="mailto:hello@thehamperhouse.com" className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded" aria-label="Send us an email">
               <Mail className="w-5 h-5" aria-hidden="true" />

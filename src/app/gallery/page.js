@@ -9,11 +9,11 @@ import { useGallery } from '@/hooks/useContent';
 
 const FALLBACK_IMAGES = [
   "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1563241598-a26248eb3a69?q=80&w=1968&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1577741314755-048d8525d31e?q=80&w=2070&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1620786968962-d2a93fbbfca9?q=80&w=1974&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1974&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1607344645866-009c320b63e0?q=80&w=2080&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1544991185-11fe528854ef?q=80&w=1974&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1562690868-60bbe7293e94?q=80&w=2118&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=1974&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?q=80&w=1935&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1584286595398-a59f21d313f5?q=80&w=2000&auto=format&fit=crop"

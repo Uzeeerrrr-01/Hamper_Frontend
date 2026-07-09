@@ -49,7 +49,7 @@ export default function AboutPage() {
                 initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
                 className="relative h-[600px] rounded-[3rem] overflow-hidden"
               >
-                <Image src="https://images.unsplash.com/photo-1620786968962-d2a93fbbfca9?q=80&w=1974&auto=format&fit=crop" alt="Craftsmanship" fill className="object-cover" />
+                <Image src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1974&auto=format&fit=crop" alt="Craftsmanship" fill className="object-cover" />
               </motion.div>
             </div>
             <div className="w-full lg:w-1/2 space-y-6">

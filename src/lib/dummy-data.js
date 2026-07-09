@@ -1,8 +1,8 @@
 export const CATEGORIES = [
   { id: "hampers", name: "Luxury Hampers", slug: "gift-hampers", img: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop" },
-  { id: "bouquets", name: "Handmade Bouquets", slug: "bouquets", img: "https://images.unsplash.com/photo-1563241598-a26248eb3a69?q=80&w=1968&auto=format&fit=crop" },
+  { id: "bouquets", name: "Handmade Bouquets", slug: "bouquets", img: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?q=80&w=1968&auto=format&fit=crop" },
   { id: "personalized", name: "Personalized Gifts", slug: "personalized-gifts", img: "https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=2070&auto=format&fit=crop" },
-  { id: "embroidery", name: "Embroidery Hoops", slug: "embroidery", img: "https://images.unsplash.com/photo-1620786968962-d2a93fbbfca9?q=80&w=1974&auto=format&fit=crop" }
+  { id: "embroidery", name: "Embroidery Hoops", slug: "embroidery", img: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1974&auto=format&fit=crop" }
 ];
 
 export const PRODUCTS = [
@@ -12,7 +12,7 @@ export const PRODUCTS = [
     price: 250,
     category: "Luxury Hampers",
     categoryId: "hampers",
-    img: "https://images.unsplash.com/photo-1544991185-11fe528854ef?q=80&w=1974&auto=format&fit=crop",
+    img: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=1974&auto=format&fit=crop",
     description: "Our signature luxury hamper filled with artisan chocolates, premium wines, and bespoke accessories. Perfect for anniversaries and corporate gifting.",
     features: ["Premium Silk Ribbon Packaging", "Handwritten Calligraphy Note", "Express Shipping Included"],
     specifications: ["Dimensions: 15x15x8 inches", "Weight: 4 lbs", "Contains Alcohol: Yes (2 Bottles)"]
@@ -23,7 +23,7 @@ export const PRODUCTS = [
     price: 120,
     category: "Handmade Bouquets",
     categoryId: "bouquets",
-    img: "https://images.unsplash.com/photo-1563241598-a26248eb3a69?q=80&w=1968&auto=format&fit=crop",
+    img: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?q=80&w=1968&auto=format&fit=crop",
     description: "A stunning arrangement of blush pink roses, peonies, and delicate filler flowers, wrapped in premium Korean paper.",
     features: ["Freshly Cut Flowers", "Lasts up to 7 Days", "Includes Flower Food"],
     specifications: ["Height: 24 inches", "Stem Count: 25-30", "Scent Profile: Sweet & Floral"]

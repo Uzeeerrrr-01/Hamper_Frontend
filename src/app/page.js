@@ -59,7 +59,7 @@ export default function Home() {
     : [
         "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=1974&auto=format&fit=crop",
         "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1620786968962-d2a93fbbfca9?q=80&w=1974&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1974&auto=format&fit=crop",
         "https://images.unsplash.com/photo-1562690868-60bbe7293e94?q=80&w=2118&auto=format&fit=crop",
         "https://images.unsplash.com/photo-1577741314755-048d8525d31e?q=80&w=2070&auto=format&fit=crop",
         "https://images.unsplash.com/photo-1607344645866-009c320b63e0?q=80&w=2080&auto=format&fit=crop",
@@ -124,13 +124,13 @@ export default function Home() {
               {/* Asymmetrical Image Composition */}
               <div className="order-1 lg:order-2 relative h-[500px] lg:h-[700px] w-full">
                 <motion.div style={{ y: yHero }} className="absolute top-0 right-0 w-3/4 h-[80%] rounded-t-[10rem] rounded-b-[2rem] overflow-hidden shadow-2xl z-10">
-                  <Image src="https://images.unsplash.com/photo-1606001099684-2a6c1170d4f3?q=80&w=2070&auto=format&fit=crop" alt="Luxury Hamper Display" fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 50vw" />
+                  <Image src="https://images.unsplash.com/photo-1584286595398-a59f21d313f5?q=80&w=2070&auto=format&fit=crop" alt="Luxury Hamper Display" fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 50vw" />
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 1 }}
                   className="absolute bottom-0 left-0 w-[55%] h-[55%] rounded-tr-[5rem] rounded-bl-[5rem] rounded-br-2xl rounded-tl-2xl overflow-hidden shadow-xl z-20 border-8 border-background"
                 >
-                  <Image src="https://images.unsplash.com/photo-1544991185-11fe528854ef?q=80&w=1974&auto=format&fit=crop" alt="Premium Gift Box Details" fill className="object-cover" sizes="30vw" />
+                  <Image src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=1974&auto=format&fit=crop" alt="Premium Gift Box Details" fill className="object-cover" sizes="30vw" />
                 </motion.div>
                 <div className="absolute top-1/4 -left-12 w-64 h-64 bg-secondary rounded-full blur-3xl opacity-50 z-0" aria-hidden="true"></div>
               </div>

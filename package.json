@@ -12,12 +12,14 @@
     "@radix-ui/react-slot": "^1.3.0",
     "axios": "^1.18.1",
     "clsx": "^2.1.1",
+    "critters": "^0.0.23",
     "date-fns": "^4.4.0",
     "framer-motion": "^12.41.0",
-    "lucide-react": "^1.21.0",
+    "lucide-react": "^1.22.0",
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-icons": "^5.7.0",
     "react-intersection-observer": "^10.0.3",
     "recharts": "^3.9.0",
     "tailwind-merge": "^3.6.0"
@@ -31,5 +33,17 @@
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
     "typescript": "^6.0.3"
-  }
+  },
+  "description": "This is a Next.js project.",
+  "main": "scaffold-admin.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Uzeeerrrr-01/Hamper_Frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Uzeeerrrr-01/Hamper_Frontend/issues"
+  },
+  "homepage": "https://github.com/Uzeeerrrr-01/Hamper_Frontend#readme"
 }
