@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Instagram } from 'lucide-react';
+import { FaInstagram as Instagram } from 'react-icons/fa';
 import PageHeader from '@/components/ui/PageHeader';
 import { EmptyState, ErrorState } from '@/components/ui/States';
 import { useGallery } from '@/hooks/useContent';

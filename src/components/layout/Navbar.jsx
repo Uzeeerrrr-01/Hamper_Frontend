@@ -3,13 +3,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Menu, X, ShoppingBag, Search, ChevronDown } from 'lucide-react';
+import { Heart, Menu, X, ShoppingBag, Search, ChevronDown, Gift, Flower, Palette } from 'lucide-react';
+import { useProducts } from '@/hooks/useProducts';
+import { useWishlist } from '@/context/WishlistContext';
+import { PRODUCTS } from '@/lib/dummy-data';
 import { Button } from '../ui/button';
 
 const categoryLinks = [
-  { name: 'Gift Hampers', href: '/gift-hampers',  emoji: '🎁' },
-  { name: 'Bouquets',     href: '/bouquets',       emoji: '💐' },
-  { name: 'Embroidery',   href: '/embroidery',     emoji: '🪡' },
+  { name: 'Gift Hampers', href: '/gift-hampers',  icon: Gift },
+  { name: 'Bouquets',     href: '/bouquets',       icon: Flower },
+  { name: 'Embroidery',   href: '/embroidery',     icon: Palette },
 ];
 
 const navLinks = [
@@ -42,16 +45,36 @@ function NavLink({ href, children, isActive }) {
 }
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled]         = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [categoryOpen, setCategoryOpen]     = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [mobileCatOpen, setMobileCatOpen]   = useState(false);
   const pathname  = usePathname();
   const dropdownRef = useRef(null);
+  const { products: apiProducts } = useProducts();
+  const { wishlist, isMounted } = useWishlist();
+  
+  const products = apiProducts?.length > 0 ? apiProducts : PRODUCTS;
+
+  const filteredProducts = searchQuery
+    ? products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.category?.toLowerCase().includes(searchQuery.toLowerCase()))
+    : [];
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 40);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial state
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -72,8 +95,8 @@ export default function Navbar() {
       role="banner"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-background/90 backdrop-blur-xl shadow-[0_2px_30px_rgba(0,0,0,0.08)] py-2 border-b border-primary/10'
-          : 'bg-transparent py-4'
+          ? 'bg-background/95 backdrop-blur-xl shadow-[0_2px_30px_rgba(0,0,0,0.08)] py-4 border-b border-primary/10'
+          : 'bg-background/80 backdrop-blur-lg py-6 border-b border-transparent'
       }`}
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between gap-8">
@@ -94,6 +117,9 @@ export default function Navbar() {
 
           {/* Home */}
           <NavLink href="/" isActive={pathname === '/'}>Home</NavLink>
+
+          {/* Shop */}
+          <NavLink href="/shop" isActive={pathname === '/shop'}>Shop</NavLink>
 
           {/* Categories dropdown */}
           <div className="relative" ref={dropdownRef}>
@@ -147,8 +173,8 @@ export default function Navbar() {
                           pathname === link.href ? 'text-primary bg-primary/5 pl-6' : 'text-foreground/70 hover:text-primary'
                         }`}
                       >
-                        <span className="text-base">{link.emoji}</span>
-                        {link.name}
+                        <link.icon className="w-4 h-4 text-[#C6A26B]" aria-hidden="true" />
+                        <span>{link.name}</span>
                       </Link>
                     </motion.div>
                   ))}
@@ -170,29 +196,44 @@ export default function Navbar() {
         {/* ── Desktop Actions ── */}
         <div className="hidden lg:flex items-center gap-1">
           {[
-            { href: '/search',   icon: Search,      label: 'Search products'   },
-            { href: '/wishlist', icon: Heart,        label: 'View wishlist'     },
+            { action: 'search',  icon: Search,      label: 'Search products'   },
+            { href: '/wishlist', icon: Heart,        label: 'View wishlist', count: isMounted ? wishlist.length : 0 },
             { href: '/cart',     icon: ShoppingBag,  label: 'View shopping cart' },
-          ].map(({ href, icon: Icon, label }) => (
-            <motion.div key={href} whileHover={{ scale: 1.12 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href={href}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-foreground/60 hover:text-primary hover:bg-primary/8 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                aria-label={label}
-              >
-                <Icon className="w-4 h-4" aria-hidden="true" />
-              </Link>
+          ].map((item, idx) => (
+            <motion.div key={idx} whileHover={{ scale: 1.12 }} whileTap={{ scale: 0.95 }}>
+              {item.action === 'search' ? (
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-foreground/60 hover:text-primary hover:bg-primary/8 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  aria-label={item.label}
+                >
+                  <item.icon className="w-4 h-4" aria-hidden="true" />
+                </button>
+              ) : (
+                <Link
+                  href={item.href}
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-foreground/60 hover:text-primary hover:bg-primary/8 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary relative"
+                  aria-label={item.label}
+                >
+                  <item.icon className="w-4 h-4" aria-hidden="true" />
+                  {item.count > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-[#B8915C] text-white text-[9px] font-bold w-[18px] h-[18px] flex items-center justify-center rounded-full shadow-sm">
+                      {item.count}
+                    </span>
+                  )}
+                </Link>
+              )}
             </motion.div>
           ))}
 
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="ml-2">
-            <Link href="/contact">
+            <Link href="/login">
               <Button
                 variant="default"
-                className="rounded-full px-5 py-1.5 text-[10px] uppercase tracking-[0.2em] font-bold shadow-md hover:shadow-primary/30 hover:shadow-lg transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                aria-label="Order a custom gift"
+                className="rounded-full px-6 py-1.5 text-[10px] uppercase tracking-[0.2em] font-bold shadow-md hover:shadow-primary/30 hover:shadow-lg transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                aria-label="Login to your account"
               >
-                Order Custom
+                Login
               </Button>
             </Link>
           </motion.div>
@@ -221,6 +262,82 @@ export default function Navbar() {
         </motion.button>
       </div>
 
+      {/* ── Search Overlay ── */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-0 left-0 w-full bg-background/95 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.05)] border-b border-primary/10 z-[60] flex flex-col items-center px-6"
+          >
+            <div className="container mx-auto max-w-2xl relative flex items-center h-[88px]">
+              <Search className="w-5 h-5 text-primary/50 absolute left-4 pointer-events-none" />
+              <input 
+                type="text" 
+                placeholder="Search for luxury hampers, bespoke gifts..." 
+                className="w-full bg-primary/5 border border-primary/20 rounded-full py-3.5 pl-12 pr-12 focus:outline-none focus:border-primary/50 text-sm font-light text-foreground transition-colors"
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button 
+                onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                className="absolute right-3 text-foreground/50 hover:text-primary p-2 rounded-full hover:bg-primary/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                aria-label="Close search"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            
+            {/* Search Suggestions */}
+            <AnimatePresence>
+              {searchQuery && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="w-full max-w-2xl mx-auto bg-white rounded-b-2xl shadow-xl overflow-hidden -mt-2 mb-6 border border-t-0 border-primary/10 relative z-10"
+                >
+                  <div className="max-h-80 overflow-y-auto py-2">
+                    {filteredProducts.length > 0 ? (
+                      filteredProducts.map((product) => (
+                        <Link 
+                          key={product.id || product._id} 
+                          href={`/product/${product.id || product._id}`}
+                          onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                          className="flex items-center gap-4 px-6 py-3 hover:bg-primary/5 transition-colors border-b border-primary/5 last:border-0"
+                        >
+                          <div className="w-12 h-12 rounded bg-primary/5 flex items-center justify-center overflow-hidden shrink-0">
+                            {product.images?.[0] || product.img || product.imageUrl ? (
+                              <img src={product.images?.[0] || product.img || product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
+                            ) : (
+                              <ShoppingBag className="w-5 h-5 text-primary/40" />
+                            )}
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-medium text-primary">{product.name}</span>
+                            <span className="text-xs text-foreground/60 capitalize">{product.category?.name || product.category}</span>
+                          </div>
+                          <div className="ml-auto text-sm font-medium text-foreground">
+                            ₹{(Number(product.price) * 83).toLocaleString('en-IN')}
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="px-6 py-8 text-center text-foreground/60 text-sm font-light">
+                        No products found for "{searchQuery}"
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* ── Mobile Menu ── */}
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -238,6 +355,9 @@ export default function Navbar() {
 
               {/* Home */}
               <MobileNavLink href="/" isActive={pathname === '/'}>Home</MobileNavLink>
+
+              {/* Shop */}
+              <MobileNavLink href="/shop" isActive={pathname === '/shop'}>Shop</MobileNavLink>
 
               {/* Categories accordion */}
               <div className="rounded-xl overflow-hidden">
@@ -277,7 +397,7 @@ export default function Navbar() {
                               pathname === link.href ? 'text-primary bg-primary/5' : 'text-foreground/70'
                             }`}
                           >
-                            <span>{link.emoji}</span> {link.name}
+                            <link.icon className="w-4 h-4 text-[#C6A26B]" aria-hidden="true" /> {link.name}
                           </Link>
                         </motion.div>
                       ))}
@@ -297,19 +417,31 @@ export default function Navbar() {
               <div className="pt-4 border-t border-primary/10 flex flex-col items-center gap-3 mt-2">
                 <div className="flex items-center gap-6">
                   {[
-                    { href: '/search',   icon: Search,     label: 'Search',   text: 'Search' },
-                    { href: '/wishlist', icon: Heart,      label: 'Wishlist',  text: 'Wishlist' },
+                    { action: 'search', icon: Search,     label: 'Search',   text: 'Search' },
+                    { href: '/wishlist', icon: Heart,      label: 'Wishlist',  text: 'Wishlist', count: isMounted ? wishlist.length : 0 },
                     { href: '/cart',     icon: ShoppingBag, label: 'Cart',    text: 'Cart' },
-                  ].map(({ href, icon: Icon, label, text }) => (
-                    <Link key={href} href={href} className="flex items-center gap-1.5 text-foreground/70 hover:text-primary transition-colors" aria-label={label}>
-                      <Icon className="w-4 h-4" aria-hidden="true" />
-                      <span className="text-xs tracking-wide">{text}</span>
-                    </Link>
+                  ].map((item, idx) => (
+                    item.action === 'search' ? (
+                      <button key={idx} onClick={() => { setIsSearchOpen(true); setMobileMenuOpen(false); }} className="flex items-center gap-1.5 text-foreground/70 hover:text-primary transition-colors focus-visible:outline-none" aria-label={item.label}>
+                        <item.icon className="w-4 h-4" aria-hidden="true" />
+                        <span className="text-xs tracking-wide">{item.text}</span>
+                      </button>
+                    ) : (
+                      <Link key={idx} href={item.href} className="flex items-center gap-1.5 text-foreground/70 hover:text-primary transition-colors focus-visible:outline-none relative" aria-label={item.label}>
+                        <item.icon className="w-4 h-4" aria-hidden="true" />
+                        <span className="text-xs tracking-wide">{item.text}</span>
+                        {item.count > 0 && (
+                          <span className="bg-[#B8915C] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full ml-0.5">
+                            {item.count}
+                          </span>
+                        )}
+                      </Link>
+                    )
                   ))}
                 </div>
-                <Link href="/contact" className="w-full">
+                <Link href="/login" className="w-full mt-2">
                   <Button variant="default" className="rounded-full w-full uppercase tracking-widest text-xs">
-                    Order Custom Gift
+                    Login
                   </Button>
                 </Link>
               </div>

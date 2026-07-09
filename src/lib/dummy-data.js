@@ -2,7 +2,7 @@ export const CATEGORIES = [
   { id: "hampers", name: "Luxury Hampers", slug: "gift-hampers", img: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop" },
   { id: "bouquets", name: "Handmade Bouquets", slug: "bouquets", img: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?q=80&w=1968&auto=format&fit=crop" },
   { id: "personalized", name: "Personalized Gifts", slug: "personalized-gifts", img: "https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=2070&auto=format&fit=crop" },
-  { id: "embroidery", name: "Embroidery Hoops", slug: "embroidery", img: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1974&auto=format&fit=crop" }
+  { id: "embroidery", name: "Embroidery Hoops", slug: "embroidery", img: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?q=80&w=2000&auto=format&fit=crop" }
 ];
 
 export const PRODUCTS = [

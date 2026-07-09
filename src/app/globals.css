@@ -58,8 +58,47 @@
     color: var(--foreground);
     font-family: var(--font-sans), Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif), Georgia, serif;
   }
+}
+
+@layer utilities {
+  .luxury-card-wrapper {
+    animation: float-luxury 6s infinite ease-in-out;
+  }
+  .luxury-card {
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+    transition: all 450ms cubic-bezier(.22,.61,.36,1);
+  }
+  .luxury-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0,0,0,.18);
+  }
+  .luxury-shine::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    z-index: 10;
+  }
+  .luxury-card:hover .luxury-shine::before {
+    animation: luxury-shine-anim 0.8s ease-in-out forwards;
+  }
+}
+
+@keyframes float-luxury {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes luxury-shine-anim {
+  0% { left: -150%; }
+  100% { left: 200%; }
 }

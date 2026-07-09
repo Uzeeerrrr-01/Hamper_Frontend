@@ -24,9 +24,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-primary text-primary-foreground pt-24 pb-12">
+    <footer className="bg-primary text-primary-foreground pt-10 pb-6">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 border-b border-primary-foreground/20 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8 border-b border-primary-foreground/20 pb-8">
 
           {/* Brand & Newsletter */}
           <div className="md:col-span-2 space-y-6">
@@ -36,38 +36,10 @@ export default function Footer() {
             <p className="text-primary-foreground/80 font-light max-w-sm leading-relaxed">
               Curating luxury moments and unforgettable gifting experiences with a personal touch.
             </p>
-            <div className="pt-4">
-              <h3 className="text-sm uppercase tracking-[0.2em] mb-4 text-secondary">Join our newsletter</h3>
-              {subStatus === 'success' ? (
-                <div className="flex items-center gap-2 text-sm text-primary-foreground/80">
-                  <CheckCircle2 className="w-5 h-5 text-secondary" aria-hidden="true" />
-                  You're subscribed! Thank you.
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="flex max-w-md" aria-label="Newsletter subscription form">
-                  <label htmlFor="newsletter-email" className="sr-only">Email address</label>
-                  <input
-                    id="newsletter-email"
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    placeholder="Your email address"
-                    required
-                    className="flex-grow px-6 py-3 rounded-l-full bg-primary-foreground/10 border border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50 focus:outline-none focus:border-secondary transition-colors"
-                  />
-                  <Button
-                    type="submit"
-                    disabled={subStatus === 'loading'}
-                    className="rounded-r-full rounded-l-none bg-secondary text-primary hover:bg-secondary/90 px-8 uppercase tracking-widest text-xs disabled:opacity-70"
-                    aria-label="Subscribe to newsletter"
-                  >
-                    {subStatus === 'loading' ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Subscribe'}
-                  </Button>
-                </form>
-              )}
-              {subStatus === 'error' && (
-                <p className="text-xs text-red-300 mt-2" role="alert">Subscription failed. Please try again.</p>
-              )}
+            <div className="flex items-center gap-4 pt-2">
+              <a href="https://www.instagram.com/_the.hamper.house_/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 rounded-full bg-secondary/10 text-secondary border border-secondary/20 hover:bg-secondary hover:text-primary transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary" aria-label="Follow us on Instagram">
+                <FaInstagram className="w-6 h-6" aria-hidden="true" />
+              </a>
             </div>
           </div>
 
@@ -100,22 +72,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between text-xs font-light text-primary-foreground/60">
-          <p>© {new Date().getFullYear()} The Hamper House. All rights reserved.</p>
-          <div className="flex space-x-6 mt-6 md:mt-0">
-            <a href="#" className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded" aria-label="Follow us on Instagram">
-              <FaInstagram className="w-5 h-5" aria-hidden="true" />
-            </a>
-            <a href="#" className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded" aria-label="Follow us on LinkedIn">
-              <FaLinkedin className="w-5 h-5" aria-hidden="true" />
-            </a>
-            <a href="#" className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded" aria-label="Follow us on Twitter">
-              <FaTwitter className="w-5 h-5" aria-hidden="true" />
-            </a>
-            <a href="mailto:hello@thehamperhouse.com" className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded" aria-label="Send us an email">
-              <Mail className="w-5 h-5" aria-hidden="true" />
-            </a>
-          </div>
+        <div className="flex items-center justify-center text-xs font-light text-primary-foreground/60 text-center">
+          <p>© 2026 The Hamper House. All rights reserved.</p>
         </div>
       </div>
     </footer>

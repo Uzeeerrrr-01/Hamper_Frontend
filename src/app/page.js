@@ -7,6 +7,7 @@ import { Heart, Eye, ArrowRight, Star, Gift, Globe, Palette } from "lucide-react
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { Card, CardContent } from "../components/ui/card";
+import ContactSection from '@/components/ui/ContactSection';
 import PageTransition from "../components/ui/PageTransition";
 import { ProductGridSkeleton, CategoryCardSkeleton } from "../components/ui/Skeleton";
 import { ErrorState } from "../components/ui/States";
@@ -16,12 +17,12 @@ import { useTestimonials, useGallery } from "../hooks/useContent";
 import { PRODUCTS, CATEGORIES, TESTIMONIALS } from "../lib/dummy-data";
 import ProductCard from "../components/ui/ProductCard";
 
-// Fallback category icons
+// Fallback category icons with elegant thin-line luxury style
 const CATEGORY_ICONS = {
-  hampers: <Gift className="w-8 h-8 mb-6 text-[#C6A26B]" />,
-  bouquets: <Heart className="w-8 h-8 mb-6 text-[#C6A26B]" />,
-  embroidery: <Palette className="w-8 h-8 mb-6 text-[#C6A26B]" />,
-  personalized: <Star className="w-8 h-8 mb-6 text-[#C6A26B]" />,
+  hampers: <Gift className="w-8 h-8 mb-3 stroke-[1] text-[#E5C158]" />,
+  bouquets: <Heart className="w-8 h-8 mb-3 stroke-[1] text-[#E5C158]" />,
+  embroidery: <Palette className="w-8 h-8 mb-3 stroke-[1] text-[#E5C158]" />,
+  personalized: <Star className="w-8 h-8 mb-3 stroke-[1] text-[#E5C158]" />,
 };
 
 const FadeIn = ({ children, delay = 0, className = "" }) => {
@@ -41,9 +42,6 @@ const FadeIn = ({ children, delay = 0, className = "" }) => {
 };
 
 export default function Home() {
-  const { scrollY } = useScroll();
-  const yHero = useTransform(scrollY, [0, 1000], [0, 200]);
-
   // API-powered sections with dummy fallbacks
   const { products: featuredProducts, loading: productsLoading, error: productsError } = useFeaturedProducts();
   const { categories, loading: categoriesLoading } = useCategories();
@@ -70,71 +68,51 @@ export default function Home() {
       <div className="overflow-hidden bg-background">
 
         {/* HERO SECTION */}
-        <section className="relative min-h-[90vh] flex items-center pt-24 pb-24">
-          <div className="container mx-auto px-6 md:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="order-2 lg:order-1 z-10 space-y-8 max-w-xl pt-12 lg:pt-0">
-                <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}>
-                  <Badge variant="outline" className="mb-8 border-primary/20 text-primary tracking-[0.3em]">
-                    Luxury Boutique
-                  </Badge>
-                  <h1 className="text-5xl md:text-7xl font-serif text-primary leading-[1.1] mb-6">
-                    Let us design your <span className="italic text-[#C6A26B]">special moments</span>
-                  </h1>
-                  <p className="text-lg text-foreground/80 font-light leading-relaxed mb-8">
-                    Discover our curated collection of premium handcrafted gifts,
-                    personalized perfectly for every occasion. Experience the art of giving.
-                  </p>
-                  <div className="flex flex-wrap gap-4">
-                    <Link href="/shop">
-                      <Button size="lg" className="rounded-full px-8 uppercase tracking-widest text-xs h-14" aria-label="Explore our collection">
-                        Explore Collection
-                      </Button>
-                    </Link>
-                    <Link href="/contact">
-                      <Button variant="outline" size="lg" className="rounded-full px-8 uppercase tracking-widest text-xs h-14 border-primary text-primary hover:bg-primary/5" aria-label="Send a custom inquiry">
-                        Custom Inquiry
-                      </Button>
-                    </Link>
-                  </div>
-                </motion.div>
+        <section className="relative min-h-[90vh] md:min-h-screen flex flex-col items-center justify-start pt-32 pb-24 overflow-hidden">
+          {/* Background Banner */}
+          <div className="absolute inset-0 z-0">
+            <Image 
+              src="/hero-banner.png" 
+              alt="Luxury Hamper Display" 
+              fill 
+              className="object-cover object-bottom" 
+              priority 
+              sizes="100vw" 
+            />
+            {/* Very subtle gradient just for the absolute top navbar, keeping the cream background clean */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent"></div>
+          </div>
 
-                {/* Statistics */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.8 }}
-                  className="grid grid-cols-3 gap-6 pt-12 border-t border-border mt-12"
-                >
-                  <div>
-                    <h4 className="text-3xl font-serif text-primary mb-1">12k+</h4>
-                    <p className="text-xs uppercase tracking-widest text-muted">Delivered</p>
-                  </div>
-                  <div>
-                    <h4 className="text-3xl font-serif text-primary mb-1">100%</h4>
-                    <p className="text-xs uppercase tracking-widest text-muted">Handcrafted</p>
-                  </div>
-                  <div>
-                    <h4 className="text-3xl font-serif text-primary mb-1 flex items-center gap-1">
-                      4.9 <Star className="w-5 h-5 fill-[#C6A26B] text-[#C6A26B]" aria-hidden="true" />
-                    </h4>
-                    <p className="text-xs uppercase tracking-widest text-muted">Reviews</p>
-                  </div>
-                </motion.div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center text-center mb-auto">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 1 }}
+              className="max-w-4xl flex flex-col items-center"
+            >
+              <Badge variant="outline" className="mb-6 border-white/40 text-white tracking-[0.3em] bg-black/10 backdrop-blur-sm">
+                Luxury Boutique
+              </Badge>
+              <h1 className="text-5xl md:text-[5.5rem] font-serif font-medium text-white leading-[1.15] mb-6 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
+                Let us design your <br/><span className="italic text-[#E5C158] drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]">special moments</span>
+              </h1>
+              <p className="text-lg md:text-xl text-white/95 font-medium leading-relaxed mb-10 max-w-2xl drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+                Discover our curated collection of premium handcrafted gifts,
+                personalized perfectly for every occasion. Experience the art of giving.
+              </p>
+              <div className="flex flex-wrap justify-center gap-5">
+                <Link href="/shop">
+                  <Button size="lg" className="rounded-full px-8 uppercase tracking-widest text-xs h-14 bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xl" aria-label="Explore our collection">
+                    Explore Collection
+                  </Button>
+                </Link>
+                <Link href="/contact">
+                  <Button variant="outline" size="lg" className="rounded-full px-8 uppercase tracking-widest text-xs h-14 border-white text-white hover:bg-white/10 bg-black/20 backdrop-blur-md shadow-2xl" aria-label="Send a custom inquiry">
+                    Custom Inquiry
+                  </Button>
+                </Link>
               </div>
-
-              {/* Asymmetrical Image Composition */}
-              <div className="order-1 lg:order-2 relative h-[500px] lg:h-[700px] w-full">
-                <motion.div style={{ y: yHero }} className="absolute top-0 right-0 w-3/4 h-[80%] rounded-t-[10rem] rounded-b-[2rem] overflow-hidden shadow-2xl z-10">
-                  <Image src="https://images.unsplash.com/photo-1584286595398-a59f21d313f5?q=80&w=2070&auto=format&fit=crop" alt="Luxury Hamper Display" fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 50vw" />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 1 }}
-                  className="absolute bottom-0 left-0 w-[55%] h-[55%] rounded-tr-[5rem] rounded-bl-[5rem] rounded-br-2xl rounded-tl-2xl overflow-hidden shadow-xl z-20 border-8 border-background"
-                >
-                  <Image src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=1974&auto=format&fit=crop" alt="Premium Gift Box Details" fill className="object-cover" sizes="30vw" />
-                </motion.div>
-                <div className="absolute top-1/4 -left-12 w-64 h-64 bg-secondary rounded-full blur-3xl opacity-50 z-0" aria-hidden="true"></div>
-              </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -153,32 +131,33 @@ export default function Home() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {displayCategories.map((cat, i) => (
-                  <FadeIn key={cat.id || cat._id || i} delay={i * 0.1}>
+                  <div key={cat.id || cat._id || i}>
                     <Link
                       href={`/${cat.slug || 'shop'}`}
-                      className="group block relative h-[500px] rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500"
+                      className="group block relative h-[480px] rounded-[32px] overflow-hidden shadow-lg hover:shadow-2xl border border-transparent hover:border-[#E5C158]/50 transition-all duration-700"
                       aria-label={`Explore ${cat.name}`}
                     >
                       <Image
                         src={cat.img || cat.image || cat.imageUrl || "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop"}
                         alt={cat.name}
                         fill
-                        className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                        className="object-cover transition-transform duration-1000 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, 25vw"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" aria-hidden="true" />
-                      <div className="absolute inset-0 p-10 flex flex-col justify-end text-primary-foreground transform translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-                        {CATEGORY_ICONS[cat.id] || <Gift className="w-8 h-8 mb-6 text-[#C6A26B]" />}
-                        <h3 className="text-3xl font-serif mb-3">{cat.name}</h3>
-                        <p className="font-light text-base text-primary-foreground/80 mb-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                          {cat.description || cat.desc || "Explore our curated selection."}
-                        </p>
-                        <div className="flex items-center text-xs uppercase tracking-[0.2em] text-[#C6A26B] opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
-                          Explore <ArrowRight className="w-4 h-4 ml-3" aria-hidden="true" />
+                      
+                      {/* Soft dark gradient ONLY on the bottom half */}
+                      <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-700" aria-hidden="true" />
+                      
+                      {/* Content directly on image */}
+                      <div className="absolute inset-0 p-8 flex flex-col justify-end items-center text-center">
+                        <div className="transform transition-transform duration-700 group-hover:-translate-y-3 flex flex-col items-center">
+                          {CATEGORY_ICONS[cat.id] || <Gift className="w-6 h-6 mb-4 stroke-[1.5] text-[#E5C158]" />}
+                          <p className="text-[10px] uppercase tracking-[0.35em] text-white/90 font-semibold mb-2 drop-shadow-md">Collection</p>
+                          <h3 className="text-[1.6rem] font-serif text-white drop-shadow-lg mb-0">{cat.name}</h3>
                         </div>
                       </div>
                     </Link>
-                  </FadeIn>
+                  </div>
                 ))}
               </div>
             )}
@@ -202,12 +181,10 @@ export default function Home() {
 
             {productsLoading ? (
               <ProductGridSkeleton count={4} />
-            ) : productsError ? (
-              <ErrorState message="Could not load products. Using cached data." />
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                {displayProducts.map((product) => (
-                  <ProductCard key={product.id || product._id} product={product} />
+                {displayProducts.map((product, index) => (
+                  <ProductCard key={product.id || product._id} product={product} index={index} />
                 ))}
               </div>
             )}
@@ -216,13 +193,11 @@ export default function Home() {
 
         {/* WHY CHOOSE US */}
         <section className="py-32 bg-primary text-primary-foreground relative overflow-hidden" aria-label="Why Choose Us">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" aria-hidden="true" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" aria-hidden="true" />
           <div className="container mx-auto px-6 md:px-12 relative z-10">
-            <FadeIn className="text-center mb-20">
+            <div className="text-center mb-20">
               <h2 className="text-4xl md:text-5xl font-serif mb-6 text-secondary">The Hamper House Standard</h2>
               <p className="text-primary-foreground/70 font-light text-lg max-w-2xl mx-auto">Committed to excellence in every detail.</p>
-            </FadeIn>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 { title: "Handcrafted", desc: "Every item is carefully made by skilled artisans with attention to detail.", icon: <Heart className="w-10 h-10 text-[#C6A26B]" aria-hidden="true" /> },
@@ -230,8 +205,8 @@ export default function Home() {
                 { title: "Personalized", desc: "Add custom monograms, notes, and specific items tailored to your needs.", icon: <Star className="w-10 h-10 text-[#C6A26B]" aria-hidden="true" /> },
                 { title: "Worldwide Shipping", desc: "Delivering your thoughtful gifts safely to loved ones anywhere.", icon: <Globe className="w-10 h-10 text-[#C6A26B]" aria-hidden="true" /> },
               ].map((feature, i) => (
-                <FadeIn key={i} delay={i * 0.1} className="h-full">
-                  <Card className="bg-primary-foreground/5 border-primary-foreground/10 backdrop-blur-md text-primary-foreground hover:bg-primary-foreground/10 transition-colors h-full group">
+                <div key={i} className="h-full">
+                  <Card className="bg-primary-foreground/5 border-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground/10 transition-colors h-full group">
                     <CardContent className="p-10 text-center flex flex-col items-center h-full">
                       <div className="w-20 h-20 rounded-full bg-primary-foreground/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                         {feature.icon}
@@ -240,7 +215,7 @@ export default function Home() {
                       <p className="font-light text-primary-foreground/70 leading-relaxed">{feature.desc}</p>
                     </CardContent>
                   </Card>
-                </FadeIn>
+                </div>
               ))}
             </div>
           </div>
@@ -283,10 +258,10 @@ export default function Home() {
         {/* GALLERY */}
         <section className="py-32 bg-background" aria-label="Gallery">
           <div className="container mx-auto px-6 md:px-12 text-center">
-            <FadeIn>
+            <div className="mb-20">
               <h2 className="text-4xl md:text-5xl font-serif text-primary mb-6">Get Inspired</h2>
-              <p className="text-muted mb-16 font-light text-lg">Follow us on Instagram @TheHamperHouse</p>
-            </FadeIn>
+              <p className="text-muted font-light text-lg">Follow us on Instagram @TheHamperHouse</p>
+            </div>
 
             {galleryLoading ? (
               <div className="columns-2 md:columns-3 lg:columns-4 gap-8 space-y-8">
@@ -299,7 +274,7 @@ export default function Home() {
                 {displayGallery.slice(0, 6).map((src, i) => {
                   const imgSrc = typeof src === 'string' ? src : src?.url || src?.image;
                   return (
-                    <FadeIn key={i} delay={i * 0.05} className="break-inside-avoid relative rounded-[2rem] overflow-hidden group shadow-sm hover:shadow-xl transition-shadow duration-500">
+                    <div key={i} className="break-inside-avoid relative rounded-[2rem] overflow-hidden group shadow-sm hover:shadow-xl transition-shadow duration-500">
                       <Image
                         src={imgSrc}
                         alt={`Gallery Image ${i + 1}`}
@@ -307,10 +282,10 @@ export default function Home() {
                         height={i % 2 === 0 ? 600 : 400}
                         className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/30 transition-colors duration-500 flex items-center justify-center backdrop-blur-[1px]" aria-hidden="true">
+                      <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/30 transition-colors duration-500 flex items-center justify-center" aria-hidden="true">
                         <InstagramIcon className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform scale-50 group-hover:scale-100" aria-hidden="true" />
                       </div>
-                    </FadeIn>
+                    </div>
                   );
                 })}
               </div>
@@ -319,6 +294,7 @@ export default function Home() {
         </section>
 
       </div>
+      <ContactSection />
     </PageTransition>
   );
 }

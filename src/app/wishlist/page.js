@@ -6,10 +6,19 @@ import { Button } from '@/components/ui/button';
 import PageHeader from '@/components/ui/PageHeader';
 import ProductCard from '@/components/ui/ProductCard';
 import { PRODUCTS } from '@/lib/dummy-data';
+import { useWishlist } from '@/context/WishlistContext';
+import { useProducts } from '@/hooks/useProducts';
 
 export default function WishlistPage() {
-  // Simulating saved wishlist items
-  const wishlistItems = PRODUCTS.slice(0, 3);
+  const { wishlist, isMounted, clearWishlist } = useWishlist();
+  const { products: apiProducts } = useProducts();
+  
+  const products = apiProducts?.length > 0 ? apiProducts : PRODUCTS;
+
+  // Real wishlist filtering based on global context
+  const wishlistItems = isMounted 
+    ? products.filter(product => wishlist.includes(product.id || product._id))
+    : [];
 
   return (
     <main className="bg-background min-h-screen">
@@ -38,7 +47,10 @@ export default function WishlistPage() {
             <div>
               <div className="flex justify-between items-end mb-12 border-b border-border pb-6">
                 <p className="text-muted text-sm">{wishlistItems.length} Items Saved</p>
-                <button className="text-sm uppercase tracking-widest text-muted hover:text-red-500 transition-colors">
+                <button 
+                  onClick={clearWishlist}
+                  className="text-sm uppercase tracking-widest text-muted hover:text-red-500 transition-colors focus-visible:outline-none"
+                >
                   Clear All
                 </button>
               </div>

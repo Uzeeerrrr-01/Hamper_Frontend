@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import FloatingWidgets from "../components/ui/FloatingWidgets";
+import { WishlistProvider } from "../context/WishlistContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -80,10 +81,12 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${playfair.variable} h-full scroll-smooth`}
     >
       <body className="min-h-full flex flex-col font-sans antialiased bg-background text-foreground">
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-        <FloatingWidgets />
+        <WishlistProvider>
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+          <FloatingWidgets />
+        </WishlistProvider>
       </body>
     </html>
   );

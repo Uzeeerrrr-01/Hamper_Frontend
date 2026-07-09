@@ -121,42 +121,48 @@ export default function ContactPage() {
           </div>
 
           {/* Details & Map */}
-          <div className="w-full lg:w-1/2 space-y-12">
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}>
-              <h2 className="text-3xl font-serif text-primary mb-8">Get In Touch</h2>
-              <address className="not-italic space-y-6">
-                <div className="flex items-start gap-4 text-foreground/80 font-light">
-                  <MapPin className="w-6 h-6 text-[#C6A26B] shrink-0 mt-1" aria-hidden="true" />
-                  <div>
-                    <p className="font-medium text-primary mb-1">Our Boutique</p>
-                    <p>123 Luxury Avenue, Suite 400<br />New York, NY 10001</p>
+          <div className="w-full lg:w-1/2">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              viewport={{ once: true }} 
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-card p-10 md:p-14 rounded-[3rem] shadow-xl border border-border/50 h-full flex flex-col justify-between space-y-12"
+            >
+              <div>
+                <h2 className="text-3xl font-serif text-primary mb-8">Get In Touch</h2>
+                <address className="not-italic space-y-6">
+                  <div className="flex items-start gap-4 text-foreground/80 font-light">
+                    <MapPin className="w-6 h-6 text-[#C6A26B] shrink-0 mt-1" aria-hidden="true" />
+                    <div>
+                      <p className="font-medium text-primary mb-1">Our Boutique</p>
+                      <p>123 Luxury Avenue, Suite 400<br />New York, NY 10001</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-4 text-foreground/80 font-light">
-                  <Phone className="w-6 h-6 text-[#C6A26B] shrink-0 mt-1" aria-hidden="true" />
-                  <div>
-                    <p className="font-medium text-primary mb-1">Phone</p>
-                    <a href="tel:+15551234567" className="hover:text-primary transition-colors">+1 (555) 123-4567</a>
+                  <div className="flex items-start gap-4 text-foreground/80 font-light">
+                    <Phone className="w-6 h-6 text-[#C6A26B] shrink-0 mt-1" aria-hidden="true" />
+                    <div>
+                      <p className="font-medium text-primary mb-1">Phone</p>
+                      <a href="tel:+15551234567" className="hover:text-primary transition-colors">+1 (555) 123-4567</a>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-4 text-foreground/80 font-light">
-                  <Mail className="w-6 h-6 text-[#C6A26B] shrink-0 mt-1" aria-hidden="true" />
-                  <div>
-                    <p className="font-medium text-primary mb-1">Email</p>
-                    <a href="mailto:hello@thehamperhouse.com" className="hover:text-primary transition-colors">hello@thehamperhouse.com</a>
+                  <div className="flex items-start gap-4 text-foreground/80 font-light">
+                    <Mail className="w-6 h-6 text-[#C6A26B] shrink-0 mt-1" aria-hidden="true" />
+                    <div>
+                      <p className="font-medium text-primary mb-1">Email</p>
+                      <a href="mailto:hello@thehamperhouse.com" className="hover:text-primary transition-colors">hello@thehamperhouse.com</a>
+                    </div>
                   </div>
-                </div>
-              </address>
-            </motion.div>
+                </address>
+              </div>
 
-            {/* Map Placeholder */}
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
+              {/* Map Placeholder */}
               <div
-                className="w-full h-64 rounded-3xl overflow-hidden bg-card border border-border/50 flex items-center justify-center relative"
+                className="w-full h-64 rounded-3xl overflow-hidden bg-background border border-border/50 flex items-center justify-center relative shadow-inner"
                 role="img"
                 aria-label="Map showing boutique location in New York"
               >
-                <div className="absolute inset-0 bg-secondary/20" />
+                <div className="absolute inset-0 bg-secondary/10" />
                 <div className="relative z-10 flex flex-col items-center text-primary/60">
                   <MapPin className="w-10 h-10 mb-2" aria-hidden="true" />
                   <p className="font-serif">123 Luxury Avenue, New York</p>
